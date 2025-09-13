@@ -17,7 +17,7 @@ function App() {
 			</header>
 			<Scene />
 			{deviceType === "iosOver13" && (
-				<button type="button" onClick={() => checkDoePermission()} disabled={doePermission}>
+				<button type="button" onClick={() => checkDoePermission()} disabled={doePermission ?? false}>
 					{doePermission ? "方向の取得が許可されています" : "方向の取得を許可する"}
 				</button>
 			)}

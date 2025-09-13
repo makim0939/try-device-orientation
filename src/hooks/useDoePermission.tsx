@@ -16,9 +16,8 @@ export function useDoePermission() {
 
 	useEffect(() => {
 		if (!Object.hasOwn(DeviceOrientationEvent, "requestPermission")) return;
-		if (!doePermission) return;
 		checkDoePermission();
-	}, [doePermission, checkDoePermission]);
+	}, [checkDoePermission]);
 
 	// requestPermissionが使えない場合は、nullを返す
 	if (!Object.hasOwn(DeviceOrientationEvent, "requestPermission")) {
