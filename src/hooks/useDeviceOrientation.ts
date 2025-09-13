@@ -14,12 +14,20 @@ export function useDeviceOrientation() {
 	});
 
 	useEffect(() => {
+		const makeSmooth = (prev: number, current: number, factor: number) => {
+			return prev + (current - prev) * factor;
+		};
 		const handleOrientation = (event: DeviceOrientationEvent) => {
-			setOrientation({
+			const orientation = {
 				alpha: event.alpha ?? 0,
 				beta: event.beta ?? 0,
 				gamma: event.gamma ?? 0,
-			});
+			};
+			setOrientation((prev) => ({
+				alpha: makeSmooth(prev.alpha, orientation.alpha, 0.05),
+				beta: makeSmooth(prev.beta, orientation.beta, 0.05),
+				gamma: makeSmooth(prev.gamma, orientation.gamma, 0.05),
+			}));
 		};
 
 		window.addEventListener("deviceorientation", handleOrientation, true);
