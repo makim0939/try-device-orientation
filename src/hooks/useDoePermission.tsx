@@ -15,8 +15,20 @@ export function useDoePermission() {
 	}, []);
 
 	useEffect(() => {
-		if (!doePermission) checkDoePermission();
+		if (!Object.hasOwn(DeviceOrientationEvent, "requestPermission")) return;
+		if (!doePermission) return;
+		checkDoePermission();
 	}, [doePermission, checkDoePermission]);
+
+	// requestPermissionが使えない場合は、nullを返す
+	if (!Object.hasOwn(DeviceOrientationEvent, "requestPermission")) {
+		return {
+			doePermission: null,
+			checkDoePermission: () => {
+				console.warn("requestPermission is not supported");
+			},
+		};
+	}
 
 	return { doePermission, checkDoePermission };
 }
